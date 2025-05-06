@@ -1,0 +1,12 @@
+# Dependencias
+node_modules/
+
+# Base de datos local
+database/
+
+# Variables de entorno
+.env
+
+# Datos de desarrollo
+save.txt
+test.http
