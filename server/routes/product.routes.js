@@ -15,7 +15,7 @@ router.get('/products',verifyToken, getProducts);
 
 router.get('/products/:id',verifyToken, getProduct);
 
-router.post('/products',verifyToken,allowRoles('admin'), createProduct);
+router.post('/products',verifyToken, createProduct);
 
 router.put('/products/:id',verifyToken,allowRoles('admin'), updateProduct);
 

@@ -8,16 +8,20 @@ function Product({ product }) {
   const navigate = useNavigate();
   
   return (
-    <div>
-        <h2>{product.title}</h2>
-        <p>{product.stock}</p>
-        <p>{product.description}</p>
-        <span>{product.createdAt}</span>
-        <button onClick={() => navigate(`/edit/${product.id}`)}>editar</button>
-        <button onClick={() => deleteProduct(product.id)}>eliminar</button>
-    </div>
-  )
+    <tr>
+      <td>{product.id}</td>
+      <td>{product.title}</td>
+      <td>{product.stock}</td>
+      <td>{product.description}</td>
+      <td>{new Date(product.createdAt).toLocaleDateString()}</td>
+      <td>
+        <button className='btn btn-primary' onClick={() => navigate(`/edit/${product.id}`)}>Editar</button>
+        <button className='btn btn-danger' onClick={() => deleteProduct(product.id)}>Eliminar</button>
+      </td>
+    </tr>
+  );
 }
+
 
 Product.propTypes = {
   product: PropTypes.shape({

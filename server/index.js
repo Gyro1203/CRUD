@@ -11,7 +11,6 @@ const PORT = process.env.PORT
 app.use(cors());
 app.use(express.json());
 
-app.use(authRoutes);
 app.use(productRoutes);
 app.use('/api/auth', authRoutes);
 

@@ -29,71 +29,80 @@ function FormPage() {
   },[getProduct, params.id]);
 
   return (
-    <div>
-
-      <h1>{
-        params.id ? "Editar Producto" : "Agregar Producto"
-      }</h1>
-      <Formik
-        initialValues={product}
-        enableReinitialize={true}
-        onSubmit={async(values)=>{
-          console.log(values);
-          if (params.id) {
-            await updateProduct(params.id, values);
-            navigate("/list");
-          }else{
-            await createProduct(values);
-          }
-          setProducts({
-            title: "",
-            stock: 0,
-            description:""
-          });
-        }}
-      >
-        {({ handleChange, handleSubmit, values, setFieldValue, isSubmitting })=>(
-        <Form onSubmit={handleSubmit}>
-          <label>Nombre</label>
-          <input 
-            type='text' 
-            name='title' 
-            placeholder='Nombre del producto'
-            onChange={handleChange}
-            value={values.title}
-          />
-
-          <label>Stock</label>
-          <input 
-            type='number' 
-            name='stock' 
-            placeholder='Cantidad'
-            onChange={handleChange}
-            onBlur={(e)=>{
-              if (e.target.value === "") {
-                setFieldValue("stock", 0);
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h2 className="mb-4 text-center">
+            {params.id ? "Editar Producto" : "Agregar Producto"}
+          </h2>
+          <Formik
+            initialValues={product}
+            enableReinitialize={true}
+            onSubmit={async (values, { resetForm }) => {
+              if (params.id) {
+                await updateProduct(params.id, values);
+                navigate("/list");
+              } else {
+                await createProduct(values);
+                resetForm(); // Limpia el formulario después de guardar
               }
             }}
-            value={values.stock}
-          />
-          
-          <label>Descripción</label>
-          <textarea
-            name="description"
-            rows="3"
-            placeholder='Descripcion del producto'
-            onChange={handleChange}
-            value={values.description}
-          ></textarea>
+          >
+            {({ handleChange, handleSubmit, values, setFieldValue, isSubmitting }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    name="title"
+                    className="form-control"
+                    placeholder="Nombre del producto"
+                    onChange={handleChange}
+                    value={values.title}
+                  />
+                </div>
 
-          <button type='submit' disabled={isSubmitting}>
-            {isSubmitting ? "Guardando" : "Guardar"}
-          </button>
-        </Form>
-        )}
-      </Formik>
+                <div className="mb-3">
+                  <label className="form-label">Stock</label>
+                  <input
+                    type="number"
+                    name="stock"
+                    className="form-control"
+                    placeholder="Cantidad"
+                    onChange={handleChange}
+                    onBlur={(e) => {
+                      if (e.target.value === "") {
+                        setFieldValue("stock", 0);
+                      }
+                    }}
+                    value={values.stock}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Descripción</label>
+                  <textarea
+                    name="description"
+                    rows="3"
+                    className="form-control"
+                    placeholder="Descripción del producto"
+                    onChange={handleChange}
+                    value={values.description}
+                  ></textarea>
+                </div>
+
+                <div className="d-grid">
+                  <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                    {isSubmitting ? "Guardando..." : "Guardar"}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default FormPage
+export default FormPage;

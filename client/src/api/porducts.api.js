@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../services/axios';
 
 export const getProductsRequest = async() => {
     return await axios.get('http://localhost:3001/products');
